@@ -1,0 +1,111 @@
+<%
+var feedback="I just took an IAT measuring my unconscious weight attitudes at Project Implicit";
+var IATFeedback=global.weightiat.feedback;
+var link=" ";
+if(IATFeedback.indexOf("little to no")>-1)
+{
+feedback = "My unconscious didn't have a preference between thin people and fat people. See what yours prefers at Project Implicit!";
+}
+if(IATFeedback.indexOf("preference for Thin")>-1)
+{
+feedback = "My unconscious preferred thin people over fat people. Test yours at Project Implicit!";
+}
+
+if(IATFeedback.indexOf("preference for Fat")>-1)
+{
+feedback = "My unconscious preferred fat people over thin people. Test yours at Project Implicit!";
+}
+facebooklink= "http://www.facebook.com/dialog/feed?app_id=274607599229217&link=https://implicit.harvard.edu/implicit/&picture=https://app-dev-01.implicit.harvard.edu/implicit/common/all/img/pilogo_notext.jpg&caption=Weight IAT&description="+feedback+"&message="+feedback+"&redirect_uri=https://implicit.harvard.edu/implicit/common/all/html/close.html";
+twitterlink="https://twitter.com/intent/tweet?url=https://implicit.harvard.edu/implicit/&text="+feedback;
+window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+ 
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+ 
+  return t;
+}(document, "script", "twitter-wjs"));
+
+%>
+
+          <table width="128" cellpadding="0" cellspacing="0" border="0" align="right">
+          <tr align="right" height="32" width="128">
+<td width="64">
+
+<div class="g-plus" data-action="share" data-annotation="none" data-href="http://app-dev-01.implicit.harvard.edu/implicit/" data-height="32"></div> </td>
+<td width="32">
+    <a href="https://twitter.com/intent/tweet?url=https://implicit.harvard.edu/implicit/&text=<%=feedback%>"  onclick="window.open('<%=twitterlink%>','twitterpopup','width=800,height=600,scrollbars=yes,resizable=yes,toolbar=no,directories=no,location=no,menubar=no,status=no,left=50,top=0'); return false"><img src="/implicit/common/all/img/twitter_icon.png" alt="Tweet" width="32" height="32" /></a></td>
+    <td  width="32">
+<a href="<%=link%>" onclick="window.open('<%=facebooklink%>','facebookpopup','width=800,height=600,scrollbars=yes,resizable=yes,toolbar=no,directories=no,location=no,menubar=no,status=no,left=50,top=0'); return false"><img src="/implicit/common/all/img/facebook_icon.png" alt="Post to Facebook" width="32" height="32" /></a>
+</td>
+</tr>
+</table>
+<br/>
+<br/>
+<br/>
+<p><b>Your result:</b>
+<div class="result" style="background-color:lightyellow">
+	<b><%= global.weightiat.feedback %></b>
+</div>
+</br></br>
+<p>The sorting test you just took is called the Implicit Association Test (IAT). You categorized good and bad words with images of Fat people and Thin people.</p>
+
+<p><b>Disclaimer:</b>The results are not a definitive assessment of your implicit preference. The results may be influenced by variables related to the test (e.g., the category labels or particular items used to represent the categories on the IAT) or the person (e.g., how tired you are). The results are provided for educational purposes only.</p>
+
+<p><b>How Does The IAT Work?</b></p>
+<p>The IAT measures the strength of associations between concepts (e.g., Fat people and Thin people) and evaluations (e.g., good, bad). The main idea is that making a response is easier when closely related items share the same response key. We would say that one has an implicit preference for Thin people relative to Fat people if they are faster to categorize words when Thin people and Good share a response key relative to when Fat people and Good share a response key.</p>
+
+<p><b>Why Should I Care About My IAT Score?</b></p>
+<p>Implicit preferences can predict behavior. Implicit preferences are related to discrimination in hiring and promotion, medical treatment, and decisions related to criminal justice.</p>
+
+<p><b>What Can I Do About an Implicit Preference That I Do Not Want?</b></p>
+<p>Right now, there is not enough research to say for sure that implicit biases can be reduced, let alone eliminated. Packaged "diversity trainings" generally do not use evidence-based methods of reducing implicit biases. Therefore, we encourage people to instead focus on strategies that deny implicit biases the chance to operate, such as blind auditions and well-designed "structured" decision processes.</p>
+
+<p><b>Other People's Results</b></p>
+<p>The summary of other people's results shows that most people implicitly prefer thin people to fat people - i.e., 
+they are faster sorting when good words and thin images go with the same key. Notably, about 40% of the people included in this graph report having no preference between the two weight categories</p>
+<div>
+	<img width="600" height="300" src="/implicit/user/demo.us/demo.weight.0003/images/weightbreakdown.jpg">
+
+</div>
+<br/>
+<p><b>What About Order Effects?</b></p>
+<p>One very common question is about the order of the parts of the IAT. 
+The answer is yes, the order in which you take the test can influence your overall results. 
+But, the effect is very small. 
+So if you first pair fat people + bad and then pair fat people + good, your results might be just a tiny bit more negative than they would be if you had done the reverse pairing first. 
+One way that we try to minimize this order effect is by giving more practice trials before the second pairing than we did before the first pairing. 
+It is also important to know that each participant is randomly assigned to an order, so half of test-takers complete fat people + bad and then fat people + good, and the other half of test-takers get the opposite order.</p>
+
+<p><b>I Still Have Questions About The IAT</b></p>
+<p>If you have questions about your IAT performance or score, please consult the links at the top of the page, where you will find answers to frequently asked questions, links to related research, and additional information about implicit associations. 
+You may also <a href="mailto:demofeedback@projectimplicit.net">email us</a> with questions or comments.</p>
+
+<p><b>Your Participation And Financial Support Are Important!</b></p>
+<p>Thank you again for participating in this research! 
+We have learned so much from people like you taking the time to be part of our work. 
+If you have time, please consider taking another test by clicking the button below. 
+As a non-profit organization, we would also appreciate your financial support. 
+Since establishment in 2005, we have educated more than a million visitors each year about implicit biases concerning race, gender, sexual orientation, and other topics. 
+Your donation supports Project Implicit's educational, scientific, and public service missions. 
+<a href="JavaScript:void window.open('https://secure3.4agoodcause.com/project-implicit/gift.aspx?id=1', 'FastResults', 'SCROLLBARS=YES,RESIZABLE=YES');">Click here to donate.</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
