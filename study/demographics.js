@@ -13,6 +13,7 @@ define(['questAPI','underscore'], function(Quest,_){
 	*/
     API.addPagesSet('basicPage',{
         noSubmit:false, //Change to true if you don't want to show the submit button.
+	v1style: 2,
         decline: true,
         declineText: isTouch ? 'Decline' : 'Decline to Answer', 
         autoFocus:true, 

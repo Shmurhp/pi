@@ -4,50 +4,30 @@ define(['managerAPI'], function(Manager) {
     API.setName('mgr');
     API.addSettings('skip',true);
     API.addSettings('skin','demo');
-
-    var raceSet = API.shuffle(['a','b'])[0];
-    var blackLabels = [];
-    var whiteLabels = [];
-
-    if (raceSet == 'a') {
-        blackLabels.push('African Americans');
-        whiteLabels.push('European Americans');
-    } else {
-        blackLabels.push('Black people');
-        whiteLabels.push('White people');
-    }
-
-    API.save({
-        raceSet:raceSet,
-        blackLabels:blackLabels,
-        whiteLabels:whiteLabels
-    });
+    API.addSettings('DEBUG', {level: 'info'});
 
     API.addGlobal({
-        raceiat:{},
+        weightiat:{},
         //YBYB: change when copying back to the correct folder
         baseURL: './study/images/',
-        raceSet:raceSet,
-        blackLabels:blackLabels,
-        whiteLabels:whiteLabels,
         posWords : API.shuffle([
-            'Love', 'Cheer', 'Friend', 'Pleasure',
-            'Adore', 'Cheerful', 'Friendship', 'Joyful', 
-            'Smiling','Cherish', 'Excellent', 'Glad', 
-            'Joyous', 'Spectacular', 'Appealing', 'Delight', 
-            'Excitement', 'Laughing', 'Attractive','Delightful', 
-            'Fabulous', 'Glorious', 'Pleasing', 'Beautiful', 
-            'Fantastic', 'Happy', 'Lovely', 'Terrific', 
+	    'Love', 'Cheer', 'Friend', 'Pleasure',
+            'Adore', 'Cheerful', 'Friendship', 'Joyful',
+            'Smiling','Cherish', 'Excellent', 'Glad',
+            'Joyous', 'Spectacular', 'Appealing', 'Delight',
+            'Excitement', 'Laughing', 'Attractive','Delightful',
+            'Fabulous', 'Glorious', 'Pleasing', 'Beautiful',
+            'Fantastic', 'Happy', 'Lovely', 'Terrific',
             'Celebrate', 'Enjoy', 'Magnificent', 'Triumph'
         ]), 
         negWords : API.shuffle([
-            'Abuse', 'Grief', 'Poison', 'Sadness', 
-            'Pain', 'Despise', 'Failure', 'Nasty', 
-            'Angry', 'Detest', 'Horrible', 'Negative', 
-            'Ugly', 'Dirty', 'Gross', 'Evil', 
-            'Rotten','Annoy', 'Disaster', 'Horrific',  
-            'Scorn', 'Awful', 'Disgust', 'Hate', 
-            'Humiliate', 'Selfish', 'Tragic', 'Bothersome', 
+	    'Abuse', 'Grief', 'Poison', 'Sadness',
+            'Pain', 'Despise', 'Failure', 'Nasty',
+            'Angry', 'Detest', 'Horrible', 'Negative',
+            'Ugly', 'Dirty', 'Gross', 'Evil',
+            'Rotten','Annoy', 'Disaster', 'Horrific',
+            'Scorn', 'Awful', 'Disgust', 'Hate',
+            'Humiliate', 'Selfish', 'Tragic', 'Bothersome',
             'Hatred', 'Hurtful', 'Sickening', 'Yucky'
         ])
     });
@@ -67,10 +47,10 @@ define(['managerAPI'], function(Manager) {
             header: 'Welcome'
         }],
 
-        raceiat_instructions: [{
+        instiat_weight: [{
             inherit: 'instructions',
-            name: 'raceiat_instructions',
-            templateUrl: 'raceiat_instructions.jst',
+            name: 'instiat',
+            templateUrl: 'instiat_weight.jst',
             title: 'IAT Instructions',
             piTemplate: true,
             header: 'Implicit Association Test'
@@ -82,12 +62,12 @@ define(['managerAPI'], function(Manager) {
             scriptUrl: 'explicits.js'
         }],
 
-        raceiat: [{
+        weightiat: [{
             type: 'pip',
             version:0.3,
             baseUrl: '//cdn.jsdelivr.net/gh/minnojs/minno-time@0.3/dist/js',
-            name: 'raceiat',
-            scriptUrl: 'raceiat.js'
+            name: 'weightiat',
+            scriptUrl: 'weightiat.js'
         }],
 
         demographics: [{
@@ -96,18 +76,6 @@ define(['managerAPI'], function(Manager) {
             scriptUrl:'demographics.js'
         }],
 
-
-        mrscale: [{
-            type: 'quest',
-            name: 'mrscale',
-            scriptUrl:'mrscale.js'
-        }],
-
-        rwascale: [{
-            type: 'quest',
-            name: 'rwascale',
-            scriptUrl:'rwascale.js'
-        }],
 
         debriefing: [{
             type: 'quest',
@@ -139,19 +107,10 @@ define(['managerAPI'], function(Manager) {
                 {
                     mixer: 'wrapper',
                     data: [
-                        {inherit: 'raceiat_instructions'},
-                        {inherit: 'raceiat'}
+                        {inherit: 'instiat_weight'},
+                        {inherit: 'weightiat'}
                     ]
                 }
-            ]
-        },
-
-        {
-            mixer:'choose',
-            n:1,
-            data:[
-                { inherit: 'mrscale' },
-                { inherit: 'rwascale' }
             ]
         },
 
