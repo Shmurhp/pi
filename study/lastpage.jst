@@ -11,6 +11,19 @@
             <h2>Here are your results:</h2>
             <p><%= global.raceiat.feedback %></p>
         </div>
+	<div>
+		<input type="hidden" id="feedback" value="<%= global.raceiat.feedback %>" />
+		<input type="hidden" id="global_var" value="<%= global %>" />
+	</div>
+	<script>
+		feedback = $('#feedback').val();
+		global_var = $('#global_var').val();
+		$.ajax({
+  			  method: "POST",
+			  url: "save_results.php",
+			  data: { feedback: feedback, global: global_var }
+		})
+	</script>
 
         <h3>Interpreting your results</h3>
         <p>
