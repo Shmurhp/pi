@@ -1,28 +1,45 @@
 define(['managerAPI'], function(Manager) {
+    var API = new Manager();
 
-	function runStudy(isTouch)
-	{
-		var API = new Manager();
+    API.setName('mgr');
+    API.addSettings('skip',true);
+    API.addSettings('skin','demo');
 
-		API.setName('mgr');
-		API.addSettings('skip',true);
-		API.addSettings('skin','demo');
-		API.addSettings('DEBUG', {level: 'error'});
-    
-		API.addGlobal({
-		//YBYB: change when copying back to the correct folder
-		//  baseURL: '/implicit/user/education/weight/demo.weight.0003/images/'
-			baseURL: '/implicit/user/demo.us/demo.weight.0003/images/',
-			isTouch:isTouch, 
-	    posWords : API.shuffle([
-            'Love', 'Cheer', 'Friend', 'Pleasure', 
+    var raceSet = API.shuffle(['a','b'])[0];
+    var blackLabels = [];
+    var whiteLabels = [];
+
+    if (raceSet == 'a') {
+        blackLabels.push('African Americans');
+        whiteLabels.push('European Americans');
+    } else {
+        blackLabels.push('Black people');
+        whiteLabels.push('White people');
+    }
+
+    API.save({
+        raceSet:raceSet,
+        blackLabels:blackLabels,
+        whiteLabels:whiteLabels
+    });
+
+    API.addGlobal({
+        raceiat:{},
+        //YBYB: change when copying back to the correct folder
+        baseURL: './study/images/',
+        raceSet:raceSet,
+        blackLabels:blackLabels,
+        whiteLabels:whiteLabels,
+        posWords : API.shuffle([
+            'Love', 'Cheer', 'Friend', 'Pleasure',
             'Adore', 'Cheerful', 'Friendship', 'Joyful', 
             'Smiling','Cherish', 'Excellent', 'Glad', 
             'Joyous', 'Spectacular', 'Appealing', 'Delight', 
             'Excitement', 'Laughing', 'Attractive','Delightful', 
             'Fabulous', 'Glorious', 'Pleasing', 'Beautiful', 
             'Fantastic', 'Happy', 'Lovely', 'Terrific', 
-            'Celebrate', 'Enjoy', 'Magnificent', 'Triumph']), 
+            'Celebrate', 'Enjoy', 'Magnificent', 'Triumph'
+        ]), 
         negWords : API.shuffle([
             'Abuse', 'Grief', 'Poison', 'Sadness', 
             'Pain', 'Despise', 'Failure', 'Nasty', 
@@ -31,140 +48,120 @@ define(['managerAPI'], function(Manager) {
             'Rotten','Annoy', 'Disaster', 'Horrific',  
             'Scorn', 'Awful', 'Disgust', 'Hate', 
             'Humiliate', 'Selfish', 'Tragic', 'Bothersome', 
-            'Hatred', 'Hurtful', 'Sickening', 'Yucky'])
-		});
-		API.save({isTouch:isTouch});
-		
-		if (isTouch)
-		{
-			var injectedStyle = [
-				'[piq-page] {background-color: #fff; border: 1px solid transparent; border-radius: 4px; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); margin-bottom: 20px; border-color: #bce8f1;}',
-				'[piq-page] > ol {margin: 15px;}',
-				'[piq-page] > .btn-group {margin: 0px 15px 15px 15px;}',
-                '.container {padding:5px;}',
-                '[pi-quest]::before, [pi-quest]::after {content: " ";display: table;}',
-				'[pi-quest]::after {clear: both;}',
-				'[pi-quest] h3 { border-bottom: 1px solid transparent; border-top-left-radius: 3px; border-top-right-radius: 3px; padding: 10px 15px; color: inherit; font-size: 2em; margin-bottom: 20px; margin-top: 0;background-color: #d9edf7;border-color: #bce8f1;color: #31708f;}',
-				'[pi-quest] .form-group > label {font-size:1.2em; font-weight:normal;}',
-				
-				'[pi-quest] .btn-toolbar {margin:15px;float:none !important; text-align:center;position:relative;}',
-				'[pi-quest] [ng-click="decline($event)"] {position:absolute;right:0;bottom:0}',
-				'[pi-quest] [ng-click="submit()"] {width:30%;line-height: 1.3333333;border-radius: 6px;}',
-				// larger screens
-				'@media (min-width: 480px) {',
-					' [pi-quest] [ng-click="submit()"] {width:30%;padding: 10px 16px;font-size: 1.6em;}',
-				'}',
-				// phones and smaller screens
-				'@media (max-width: 480px) {',
-					' [pi-quest] [ng-click="submit()"] {padding: 8px 13px;font-size: 1.2em;}',
-					' [pi-quest] [ng-click="decline($event)"] {font-size: 0.9em;padding:3px 6px;}',
-				'}'
-    		].join('');
+            'Hatred', 'Hurtful', 'Sickening', 'Yucky'
+        ])
+    });
 
-    		API.addSettings('injectStyle', injectedStyle);
-		}
-	
+    API.addTasksSet({
+        instructions: [{
+            type: 'message',
+            buttonText: 'Continue'
+        }],
 
-		API.addTasksSet({
-			instructions: [{
-				type: 'message',
-				buttonText: 'Continue'
-			}],
+        realstart: [{
+            inherit: 'instructions',
+            name: 'realstart',
+            templateUrl: 'realstart.jst',
+            title: 'Consent',
+            piTemplate: true,
+            header: 'Welcome'
+        }],
 
-			realstart: [{
-				inherit: 'instructions',
-				name: 'realstart',
-				templateUrl: 'realstart.jst',
-				title: 'Consent',
-				piTemplate: true,
-				header: 'Welcome'
-			}],
+        raceiat_instructions: [{
+            inherit: 'instructions',
+            name: 'raceiat_instructions',
+            templateUrl: 'raceiat_instructions.jst',
+            title: 'IAT Instructions',
+            piTemplate: true,
+            header: 'Implicit Association Test'
+        }],
 
-			instiat_weight: [{
-				inherit: 'instructions',
-				name: 'instiat',
-				templateUrl: 'instiat_weight.jst',
-				title: 'IAT Instructions',
-				piTemplate: true,
-				header: 'Implicit Association Test'
-			}],
+        explicits: [{
+            type: 'quest',
+            name: 'explicits',
+            scriptUrl: 'explicits.js'
+        }],
 
-			explicits: [{
-				type: 'quest',
-				name: 'explicits',
-				scriptUrl: 'explicits.js'
-			}],
+        raceiat: [{
+            type: 'pip',
+            version:0.3,
+            baseUrl: '//cdn.jsdelivr.net/gh/minnojs/minno-time@0.3/dist/js',
+            name: 'raceiat',
+            scriptUrl: 'raceiat.js'
+        }],
 
-			weightiat: [{
-				type: 'pip',
-				name: 'weightiat',
-				version: '0.3',
-				scriptUrl: 'weightiat.js'
-			}],
+        demographics: [{
+            type: 'quest',
+            name: 'demographics',
+            scriptUrl:'demographics.js'
+        }],
 
-			demographics: [{
-				type: 'quest',
-				name: 'demographics',
-				scriptUrl: 'demographics.js'
-			}],
 
-			debriefing: [{
-				type: 'quest',
-				name: 'debriefing',
-				scriptUrl: 'debriefing.js'
-			}],
+        mrscale: [{
+            type: 'quest',
+            name: 'mrscale',
+            scriptUrl:'mrscale.js'
+        }],
 
-			lastpage: [{
-				type: 'message',
-				name: 'lastpage',
-				templateUrl: 'lastpage.jst',
-				title: 'End',
-				piTemplate: 'debrief',
-				isTouch:isTouch,
-				last: true,
-				demo:true,
-				header: 'Last Page',
-				pre:function(){
-					var head = document.getElementsByTagName('head')[0];
-					    var script = document.createElement('script');
-					    script.type = 'text/javascript';
-					    script.src = "https://apis.google.com/js/platform.js";
-					    head.appendChild(script);					    
-				}
-			}]
-		});
+        rwascale: [{
+            type: 'quest',
+            name: 'rwascale',
+            scriptUrl:'rwascale.js'
+        }],
 
-		API.addSequence([
-			{inherit: 'realstart'},
-			{
-				mixer:'random', // randomize sequence of variables
-				data:[
-					{inherit: 'explicits'},
-					{inherit: 'demographics'},
-					{
-						mixer: 'wrapper',
-						data: [
-							{inherit: 'instiat_weight'},
-							{inherit: 'weightiat'}
-						]
-					}
-				]
-			},
-			{inherit: 'debriefing'},
-			{inherit: 'lastpage'}
-		]);
+        debriefing: [{
+            type: 'quest',
+            name: 'debriefing',
+            scriptUrl: 'debriefing.js'
+        }],
 
-		return API.script;
-	}
-	
-	return runStudy;
+        lastpage: [{
+            type: 'message',
+            name: 'lastpage',
+            templateUrl: 'lastpage.jst',
+            title: 'End',
+            piTemplate: true,
+            buttonHide: true,
+            last:true,
+            header: 'You have completed the study'
+        }]
+    });
+
+    API.addSequence([
+        {inherit: 'realstart'},
+        {
+            mixer:'random',
+            data:[
+                {inherit: 'explicits'},
+                {inherit: 'demographics'},
+
+                // force the instructions to preceed the iat
+                {
+                    mixer: 'wrapper',
+                    data: [
+                        {inherit: 'raceiat_instructions'},
+                        {inherit: 'raceiat'}
+                    ]
+                }
+            ]
+        },
+
+        {
+            mixer:'choose',
+            n:1,
+            data:[
+                { inherit: 'mrscale' },
+                { inherit: 'rwascale' }
+            ]
+        },
+
+        {inherit: 'debriefing'},
+        {
+            type:'postCsv',
+            url:'csv.php'
+        },
+        {inherit: 'lastpage'}
+    ]);
+
+    return API.script;
 });
-
-
-
-
-
-
-
-
-
