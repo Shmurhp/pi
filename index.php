@@ -1,13 +1,9 @@
 <?php
 session_start();
+require 'smarty_setup.php';
+
 $_SESSION["favcolor"] = "green";
 
-echo 
-'
-<form action="group.php" method="post">
-Group ID: <input type="text" name="group_id"><br />
-<input type="submit">
-</form>
-'
-
+$smarty->assign('hello_msg', 'Hello!');
+$smarty->display('index.tpl');
 ?>
