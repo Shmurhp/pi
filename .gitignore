@@ -27,3 +27,6 @@ nbproject
 node_modules
 data
 templates_c
+vendor
+composer.phar
+composer.lock
