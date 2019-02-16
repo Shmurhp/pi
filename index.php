@@ -1,6 +1,10 @@
 <?php
+require 'setup.php';
+$result = $client->describeTable(array(
+    'TableName' => 'pi-devel'
+));
+
 session_start();
-require 'smarty_setup.php';
 
 $_SESSION["favcolor"] = "green";
 
