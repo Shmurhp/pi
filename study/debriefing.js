@@ -10,6 +10,24 @@ define(['questAPI'], function(Quest){
         answers: ['Not at all', 'Slightly', 'Moderately', 'Very', 'Extremely']
     });
 
+    API.addQuestionsSet('basicQ',{
+        decline: true,
+        required : true,
+        errorMsg: {
+            required: isTouch 
+                ? 'Please select an answer, or click \'Decline\'' 
+                : 'Please select an answer, or click \'Decline to Answer\''
+        },
+        autoSubmit:true,
+        numericValues:true
+    });
+
+    API.addQuestionsSet('text',{
+        inherit: 'basicQ',
+        type: 'text',
+        noSubmit:false
+    });
+
     var onFB = {
         type:'grid',
         name: 'iatevaluations',
@@ -44,6 +62,18 @@ define(['questAPI'], function(Quest){
         ]
     };
 
+    var onTrait = {
+        type:'grid',
+        name: 'iatevaluations',
+        description: '<p>2. What do you think of the IAT?</p>',
+        columns: ['Not at all', 'Slightly', 'Moderately', 'Very', 'Extremely'],
+        rows:[
+            'To what extent did you enjoy trying the IAT?',
+            'To what extent did the IAT score you received change your view of yourself?',
+            'To what extent are you skeptical of the IAT score that you received?'
+        ],
+        rowStemCss: {width:'280px'}
+    };
 
     API.addSequence([
         {
@@ -81,6 +111,11 @@ define(['questAPI'], function(Quest){
                     ]
                 },
                 isTouch ? onFB : onFBtouch,
+                {
+                    type:'text',
+                    name: 'trait',
+                    description:'<p>3. What traits do you believe a mentee should possess?</p>'
+                },
                 {
                     type:'info',
                     description:'<h4>Click "Submit" to submit your answers and receive more information.</h4></p>'
