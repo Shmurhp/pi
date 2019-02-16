@@ -47,6 +47,12 @@ define(['managerAPI'], function(Manager) {
             header: 'Welcome'
         }],
 
+        group_id: [{
+            type: 'quest',
+            name: 'group_id',
+            scriptUrl: 'group_id.js'
+        }],
+
         instiat_weight: [{
             inherit: 'instructions',
             name: 'instiat',
@@ -97,6 +103,7 @@ define(['managerAPI'], function(Manager) {
 
     API.addSequence([
         {inherit: 'realstart'},
+        {inherit: 'group_id'},
         {
             mixer:'random',
             data:[
