@@ -1,0 +1,12 @@
+<Study id="Demo.Weight.0003" datagroup="std" hotLinkRedirect="/implicit/">
+
+	<Definitions>
+        <Task id="weightdemo" file="notouch.js">/common/all/js/quest/0.0/dist/manager.jsp</Task>
+        <Task id="dummy">notouch.js</Task>
+	</Definitions>
+
+	<Map>
+		<Task id="weightdemo"/>
+		<Task id="dummy"/>		
+	</Map>
+</Study>
