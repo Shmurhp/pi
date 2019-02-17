@@ -11,17 +11,16 @@
             <h2>Here are your results:</h2>
             <p><%= global.weightiat.feedback %></p>
         </div>
-	<div>
-		<input type="hidden" id="feedback" value="<%= global.weightiat.feedback %>" />
-		<input type="hidden" id="global_var" value="<%= global %>" />
-	</div>
 	<script>
-		feedback = $('#feedback').val();
-		global_var = $('#global_var').val();
 		$.ajax({
   			  method: "POST",
 			  url: "save_results.php",
-			  data: { feedback: feedback, global_var: piGlobal }
+			  data: { 
+				resultText: piGlobal.weightiat.feedback, 
+				demoQuestions: piGlobal.demographics.questions, 
+				groupID: piGlobal.group_id.questions.groupID.response,
+				answers: piGlobal.weightiat.logs
+				}
 		})
 	</script>
 
