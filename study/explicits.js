@@ -46,7 +46,6 @@ define(['questAPI'], function(Quest){
     API.addQuestionsSet('therm',{
 		inherit: 'basicSelect',
 		answers: [
-			{text:'10 - Extremely warm', value:10},
 			{text:'9 - Very warm', value:9},
 			{text:'8 - Moderately warm', value:8},
 			{text:'7 - Somewhat warm', value:7},
