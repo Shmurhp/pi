@@ -13,11 +13,6 @@ define(['questAPI'], function(Quest){
     API.addQuestionsSet('basicQ',{
         decline: true,
         required : true,
-        errorMsg: {
-            required: isTouch 
-                ? 'Please select an answer, or click \'Decline\'' 
-                : 'Please select an answer, or click \'Decline to Answer\''
-        },
         autoSubmit:true,
         numericValues:true
     });
@@ -60,19 +55,6 @@ define(['questAPI'], function(Quest){
                 description: '<p>To what extent are you skeptical of the IAT score that you received?</p>'
             }
         ]
-    };
-
-    var onTrait = {
-        type:'grid',
-        name: 'iatevaluations',
-        description: '<p>2. What do you think of the IAT?</p>',
-        columns: ['Not at all', 'Slightly', 'Moderately', 'Very', 'Extremely'],
-        rows:[
-            'To what extent did you enjoy trying the IAT?',
-            'To what extent did the IAT score you received change your view of yourself?',
-            'To what extent are you skeptical of the IAT score that you received?'
-        ],
-        rowStemCss: {width:'280px'}
     };
 
     API.addSequence([
