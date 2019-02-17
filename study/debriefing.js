@@ -10,6 +10,19 @@ define(['questAPI'], function(Quest){
         answers: ['Not at all', 'Slightly', 'Moderately', 'Very', 'Extremely']
     });
 
+    API.addQuestionsSet('basicQ',{
+        decline: true,
+        required : true,
+        autoSubmit:true,
+        numericValues:true
+    });
+
+    API.addQuestionsSet('text',{
+        inherit: 'basicQ',
+        type: 'text',
+        noSubmit:false
+    });
+
     var onFB = {
         type:'grid',
         name: 'iatevaluations',
@@ -43,7 +56,6 @@ define(['questAPI'], function(Quest){
             }
         ]
     };
-
 
     API.addSequence([
         {
@@ -81,6 +93,11 @@ define(['questAPI'], function(Quest){
                     ]
                 },
                 isTouch ? onFB : onFBtouch,
+                {
+                    type:'text',
+                    name: 'trait',
+                    description:'<p>3. What traits do you believe a mentee should possess?</p>'
+                },
                 {
                     type:'info',
                     description:'<h4>Click "Submit" to submit your answers and receive more information.</h4></p>'
