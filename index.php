@@ -1,7 +1,7 @@
 <?php
 require 'setup.php';
 $result = $client->describeTable(array(
-    'TableName' => 'pi-devel'
+    'TableName' => $_SERVER["ddbtablea"]
 ));
 
 session_start();
