@@ -4,7 +4,8 @@ date_default_timezone_set('America/New_York');
 
 use Aws\DynamoDb\DynamoDbClient;
 $client = new DynamoDbClient([
-    'region'  => 'us-east-1',
+    #'region'  => 'us-east-1',
+    'region' => $_SERVER["region"],
     'version' => 'latest'
 ]);
 

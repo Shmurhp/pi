@@ -2,7 +2,7 @@
 require 'setup.php';
 
 $result = $client->describeTable(array(
-    'TableName' => 'pi-devel'
+    'TableName' => $_SERVER["ddbtablea"]
 ));
 
 $_SESSION["favcolor"] = "green";
