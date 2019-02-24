@@ -1,6 +1,7 @@
 <?php
 
 require 'vendor/autoload.php';
+require 'setup.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -20,8 +21,13 @@ $row = 1;
 $col = 0;
 $sheet->setCellValueByColumnAndRow($col++,$row,'Timestamp');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Group ID');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Group ID Text');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Client IP');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Mentee Traits');
-$sheet->setCellValueByColumnAndRow($col++,$row,'Age');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Result Text');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Result Score');
+
+$sheet->setCellValueByColumnAndRow($col++,$row,'Birth Year');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Income Level');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Education Level');
 $sheet->setCellValueByColumnAndRow($col++,$row,'User Preference');
@@ -31,17 +37,8 @@ $sheet->setCellValueByColumnAndRow($col++,$row,'Most People');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Compared to Most People');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Height');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Weight');
-$sheet->setCellValueByColumnAndRow($col++,$row,'Bias');
-$sheet->setCellValueByColumnAndRow($col++,$row,'IAT Score');
 
-$sdk = new Aws\Sdk([
-    'region'   => 'us-east-1',
-    'version'  => 'latest'
-]);
-
-$dynamodb = $sdk->createDynamoDb();
-$marshaler = new Marshaler();
-
+#$tableName = $_SERVER["ddbtablea"];
 $tableName = 'pi-devel';
 
 $params = [
@@ -50,22 +47,39 @@ $params = [
 
 try {
     $result = $dynamodb->scan($params);
-
-    $row = 2;
-    foreach ($result['Items'] as $r) {
-	$col = 1;
-	$sheet->setCellValueByColumnAndRow($col++,$row,($r['entryid'] ? $marshaler->unmarshalValue($r['entryid']) : ''));
-	$sheet->setCellValueByColumnAndRow($col++,$row,($r['groupid'] ? $marshaler->unmarshalValue($r['groupid']) : ''));
-	$sheet->setCellValueByColumnAndRow($col++,$row,($r['clientIP'] ? $marshaler->unmarshalValue($r['clientIP']) : ''));
-	$sheet->setCellValueByColumnAndRow($col++,$row,($r['age'] ? $marshaler->unmarshalValue($r['age']) : ''));
-	$row++;
-    }
-
 } catch (DynamoDbException $e) {
     echo "Unable to query:\n";
     echo $e->getMessage() . "\n";
 }
 
+$row = 2;
+
+//print_r($result['Items'][0]);
+
+foreach ($result['Items'] as $r) {
+    $col = 1;    
+    
+    $sheet->setCellValueByColumnAndRow($col++,$row,($r['entryid'] ? $marshaler->unmarshalValue($r['entryid']) : ''));
+    $sheet->setCellValueByColumnAndRow($col++,$row,($r['groupid'] ? $marshaler->unmarshalValue($r['groupid']) : ''));
+    $sheet->setCellValueByColumnAndRow($col++,$row,($r['groupText'] ? $marshaler->unmarshalValue($r['groupText']) : ''));
+    $sheet->setCellValueByColumnAndRow($col++,$row,($r['clientIP'] ? $marshaler->unmarshalValue($r['clientIP']) : ''));
+    $sheet->setCellValueByColumnAndRow($col++,$row,($r['traits'] ? $marshaler->unmarshalValue($r['traits']) : ''));
+    $sheet->setCellValueByColumnAndRow($col++,$row,($r['resultText'] ? $marshaler->unmarshalValue($r['resultText']) : ''));
+    $sheet->setCellValueByColumnAndRow($col++,$row,($r['resultScore'] ? $marshaler->unmarshalValue($r['resultScore']) : ''));
+
+    //print $marshaler->unmarshalValue($r['demographics']['birthYear']);
+
+
+    $demo = $marshaler->unmarshalValue($r['demographics']);
+    //print $demo['birthYear'];
+    //  print_r($demo);
+    $sheet->setCellValueByColumnAndRow($col++, $row, $demo['birthYear']);
+
+
+//    $sheet->setCellValueByColumnAndRow($col++,$row,($r['clientIP'] ? $marshaler->unmarshalValue($r['clientIP']) : ''));
+  //  $sheet->setCellValueByColumnAndRow($col++,$row,($r['age'] ? $marshaler->unmarshalValue($r['age']) : ''));
+    $row++;
+}
 
 
 $writer = new Xlsx($spreadsheet);

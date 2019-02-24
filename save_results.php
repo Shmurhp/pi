@@ -24,7 +24,7 @@
 	$requiredDemo = array('raceomb002', 'birthMonth', 'incomeSelf', 'edu', 'genderIdentity', 'edu', 'ethnicityomb', 'occuSelf');
 	$requiredExplicit = array('att7', 'othersay001', 'iam001', 'mostpref001', 'comptomost001', 'myheight002', 'myweight002');
 
-	$tableName = 'pi-devel-lookup';
+	$tableName = $_SERVER["ddbtableb"];
 	$demoArr = array();
 	foreach ($requiredDemo as $lookup) {
 		if (strlen($demoQuestions[$lookup]['response']) == 0 || $demoQuestions[$lookup]['response'] == 'NaN'){
@@ -137,7 +137,7 @@
 
 	$resultScore = is_numeric($resultTextArr[$resultText]) ? $resultTextArr[$resultText] : 999;
 
-	$tableName = 'pi-devel';
+	$tableName = $_SERVER["ddbtablea"];
 	$item = $marshaler->marshalJson('
     	{
         	"clientIP": "' . $clientIP . '",
