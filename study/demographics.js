@@ -85,7 +85,7 @@ define(['questAPI','underscore'], function(Quest,_){
     });
 
     API.addQuestionsSet('genderIdentity',{
-        inherit: 'multiChoice',
+        inherit: 'singleChoice',
         name: 'genderIdentity',
         stem: 'What is your current gender identity? (check all that apply)',
         answers: [
