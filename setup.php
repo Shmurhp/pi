@@ -2,11 +2,14 @@
 require 'vendor/autoload.php';
 date_default_timezone_set('America/New_York');
 
-use Aws\DynamoDb\DynamoDbClient;
-$client = new DynamoDbClient([
-    'region'  => 'us-east-1',
-    'version' => 'latest'
+use Aws\DynamoDb\Exception\DynamoDbException;
+use Aws\DynamoDb\Marshaler;
+$sdk = new Aws\Sdk([
+   		'region'   => 'us-east-1',
+   		'version'  => 'latest'
 ]);
+$dynamodb = $sdk->createDynamoDb();
+$marshaler = new Marshaler();
 
 // put full path to Smarty.class.php
 require('vendor/smarty/smarty/libs/Smarty.class.php');
