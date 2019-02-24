@@ -1,6 +1,15 @@
 <?php
 	require 'setup.php';
 	require 'vendor/autoload.php';	
+	$groupLookup = array();
+	$groupLookup[1] = 'Coalition of Hispanic Women';
+	$groupLookup[2] = 'NAACP';
+	$groupLookup[3] = 'Alpha Kappa Alpha Sorority, Inc.';
+	$groupLookup[4] = 'Kansas City Women in Technology';
+	$groupLookup[5] = 'Delta Sigma Theta, Sorority, Inc.';
+	$groupLookup[6] = 'Women\'s Foundation';
+	$groupLookup[7] = 'KC Council Women Business Owners';
+
 	$entryid = time();
 	$clientIP = getRealIpAddr();
 	$resultText = $_POST["resultText"];
@@ -12,19 +21,10 @@
 
 	//code here to call something to write everything to file
 
-	$groupLookup = array();
-	$groupLookup[1] = 'Coalition of Hispanic Women';
-	$groupLookup[2] = 'NAACP';
-	$groupLookup[3] = 'Alpha Kappa Alpha Sorority, Inc.';
-	$groupLookup[4] = 'Kansas City Women in Technology';
-	$groupLookup[5] = 'Delta Sigma Theta, Sorority, Inc.';
-	$groupLookup[6] = 'Women\'s Foundation';
-	$groupLookup[7] = 'KC Council Women Business Owners';
-
 	$requiredDemo = array('raceomb002', 'birthMonth', 'incomeSelf', 'edu', 'genderIdentity', 'edu', 'ethnicityomb', 'occuSelf');
 	$requiredExplicit = array('att7', 'othersay001', 'iam001', 'mostpref001', 'comptomost001', 'myheight002', 'myweight002');
 
-	$tableName = 'pi-devel-lookup';
+	$tableName = $_SERVER["ddbtableb"];
 	$demoArr = array();
 	foreach ($requiredDemo as $lookup) {
 		if (strlen($demoQuestions[$lookup]['response']) == 0 || $demoQuestions[$lookup]['response'] == 'NaN'){
@@ -137,7 +137,7 @@
 
 	$resultScore = is_numeric($resultTextArr[$resultText]) ? $resultTextArr[$resultText] : 999;
 
-	$tableName = 'pi-devel';
+	$tableName = $_SERVER["ddbtablea"];
 	$item = $marshaler->marshalJson('
     	{
         	"clientIP": "' . $clientIP . '",
@@ -162,4 +162,5 @@
     		echo "Unable to add item:\n";
 			echo $e->getMessage() . "\n";
 	}
+	shell_exec('php generate_excel.php')
 ?>
