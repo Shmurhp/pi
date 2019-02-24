@@ -101,7 +101,7 @@ define(['questAPI','underscore'], function(Quest,_){
     API.addQuestionsSet('birthMonth',{
         inherit: 'singleChoice',
         style:'multiButtons',
-        name: 'birthmonth',
+        name: 'birthMonth',
         stem: 'What is your birth month?',
         answers: [
             {text:'January',value:1},
@@ -121,7 +121,7 @@ define(['questAPI','underscore'], function(Quest,_){
 
     API.addQuestionsSet('birthYear',{
         inherit: 'singleChoicedrop',
-        name: 'birthyear',
+        name: 'birthYear',
         stem: 'What is your birth year?',
         answers: _.range((new Date()).getFullYear()-10, 1910, -1) // use underscore to create an array of years from ten years ago back to 1910
     });
