@@ -1,7 +1,16 @@
 <?php
 	require 'setup.php';
-	require 'vendor/autoload.php';
-	
+	require 'vendor/autoload.php';	
+	$entryid = time();
+	$clientIP = getRealIpAddr();
+	$resultText = $_POST["resultText"];
+	$demoQuestions = $_POST["demoQuestions"];
+	$groupID = $_POST["groupID"];
+	$groupText = ($groupID < 8 && $groupID > 0) ? $groupLookup[$_POST["groupID"]] : 'Invalid Group ID';
+	$explicits = $_POST["explicits"];
+	$traits = $_POST["traits"];
+
+	//code here to call something to write everything to file
 
 	$groupLookup = array();
 	$groupLookup[1] = 'Coalition of Hispanic Women';
@@ -12,21 +21,14 @@
 	$groupLookup[6] = 'Women\'s Foundation';
 	$groupLookup[7] = 'KC Council Women Business Owners';
 
-	$requiredDemo = array('raceomb002', 'birthmonth', 'birthyear', 'income', 'edu', 'genderIdentity', 'edu', 'occuSelf', 'ethnicityomb');
+	$requiredDemo = array('raceomb002', 'birthMonth', 'incomeSelf', 'edu', 'genderIdentity', 'edu', 'ethnicityomb', 'occuSelf');
 	$requiredExplicit = array('att7', 'othersay001', 'iam001', 'mostpref001', 'comptomost001', 'myheight002', 'myweight002');
-
-	$clientIP = getRealIpAddr();
-	$resultText = $_POST["resultText"];
-	$demoQuestions = $_POST["demoQuestions"];
-	$groupID = $groupID[$_POST["groupID"]];
-	$explicits = $_POST["explicits"];
-	$trait = $_POST["trait"];
 
 	$tableName = 'pi-devel-lookup';
 	$demoArr = array();
 	foreach ($requiredDemo as $lookup) {
-		if (strlen($demoQuestions[$lookup]['response']) == 0){
-			$demoArr[$lookup] = 'empty';
+		if (strlen($demoQuestions[$lookup]['response']) == 0 || $demoQuestions[$lookup]['response'] == 'NaN'){
+			$demoArr[$lookup] = 'Declined to Answer';
 		} else {
 			// query the $lookup table with value they answered in $demoQuestions[$lookup]
 			// build up array of demo answers with key = $lookup and value = what was returned from above
@@ -42,61 +44,83 @@
 			];
 			try {
 				$result = $dynamodb->getItem($params);
-				print_r($result["Item"]);
-				$lookupResult = $result["Item"]["lookup"]["M"][$demoQuestions[$lookup]]["S"];
+				$lookupResult = $result["Item"]["lookup"]["M"][$demoQuestions[$lookup]['response']]["S"];
 			} catch (DynamoDbException $e) {
 				echo "Unable to get item:\n";
 				echo $e->getMessage() . "\n";
 			}
-			$demoArr[$lookup] = $lookupResult;
+			if ($lookup == 'occuSelf'){
+				$occuSelfVal = $result["Item"]["lookup"]["M"][$demoQuestions[$lookup]['response']]["S"]; 
+			} else {
+				$demoArr[$lookup] = "'" . $lookupResult. "'";
+			}
 		}
 	}
+	$demoArr['birthYear'] = (is_numeric($demoQuestions['birthYear']['response'])) ? 2010 - $demoQuestions['birthYear']['response'] : 9999;
+	// gonna need to lookup occupation title using occuSelf value here
+	if (strlen($occuSelfVal > 0)){
+		$key = $marshaler->marshalJson('
+   			{
+     	  		"name": "' . $occuSelfVal . '"
+    		}
+		');	
+		$params = [
+			'TableName' => $tableName,
+			'Key' => $key
+		];
+		try {
+			$result = $dynamodb->getItem($params);
+			$lookupResult = $result["Item"]["lookup"]["M"][$demoQuestions['occuSelfDetail']['response']]["S"];
+		} catch (DynamoDbException $e) {
+			echo "Unable to get item:\n";
+			echo $e->getMessage() . "\n";
+		}
+	} else {
+		$lookupResult = 'Declined to Answer';
+	}
+	$demoArr['occuSelfDetail'] = $lookupResult == 'Unemployed' ? 'Unemployed' : $lookupResult;
+	//
 	$explicitArr = array();
 	foreach ($requiredExplicit as $lookup) {
-		if (strlen($explicits[$lookup]['response']) == 0){
-			$explicitArr[$lookup] = 'empty';
+		if (strlen($explicits[$lookup]['response']) == 0 || $explicits[$lookup]['response'] == 'NaN'){
+			$explicitArr[$lookup] = 'Declined to Answer';
 		} else {
 			switch ($lookup){
-					case myheight002:
+					case 'myweight002':
 						// math to convert $explicits[$lookup]['response'] to inches
 						if ($explicits[$lookup]['response'] == 1){
-							$heighInches = '< 36';
+							$explicitArr[$lookup] = '< 50';
 						} elseif ($explicits[$lookup]['response'] == 51) {
-							$heighInches = '> 84';
+							$explicitArr[$lookup] = '> 400';
+						} else {
+							$response = $explicits[$lookup]['response'];
+							$explicitArr[$lookup] = "'" . (($explicits[$lookup]['response'] * 5) + 40) . "'";
 						}
-						$heightInches = $explicits[$lookup]['response'];
-						$explicitArr[$lookup] = $height;
 						break;
-					case myweight002: 
+					case 'myheight002': 
 						// math to convert $explicits[$lookup]['response'] to inches
-						$explicitArr[$lookup] = $weight;
+						if ($explicits[$lookup]['response'] == 1){
+							$explicitArr[$lookup] = '< 36';
+						} elseif ($explicits[$lookup]['response'] == 51) {
+							$explicitArr[$lookup] = '> 84';
+						} else {
+							$explicitArr[$lookup] = "'" . ($explicits[$lookup]['response'] + 34) . "'";
+						}
 						break;
 					default:
 						if (strlen($explicits[$lookup]['response']) == 0){
-							$explicitArr[$lookup] = 'empty';
+							$explicitArr[$lookup] = 'Declined to Answer';
 						} else {
 							// query the $lookup table with value they answered in $demoQuestions[$lookup]
 							// build up array of demo answers with key = $lookup and value = what was returned from above
 							// print $key['name'] . " : " . $key['response'] . "\n";
-							$key = $marshaler->marshalJson('
-   								{
-        							"name": "' . $lookup . '"
-    							}
-							');
-							$params = [
-								'TableName' => $tableName,
-								'Key' => $key
-							];
-							try {
-								$result = $dynamodb->getItem($params);
-								print_r($result["Item"]);
-								$lookupResult = $result["Item"]["lookup"]["M"][$demoQuestions[$lookup]]["S"];
-							} catch (DynamoDbException $e) {
-								echo "Unable to get item:\n";
-								echo $e->getMessage() . "\n";
-								$lookupResult = '999';
+							$explicitVal = 3;
+							for ($i = 1; $i < $explicits[$lookup]['response']; $i++){
+								$explicitVal -= 1;
 							}
-							$explicitArr[$lookup] = $lookupResult;
+							$explicitArr[$lookup] = "'" . $explicitVal . "'";
+							
+							// $requiredExplicit = array('att7', 'othersay001', 'iam001', 'mostpref001', 'comptomost001', 'myheight002', 'myweight002');
 						}	
 						break;
 			}
@@ -111,18 +135,21 @@
 	$resultTextArr['Your data suggest a moderate automatic preference for Thin people over Fat people.'] = -2;
 	$resultTextArr['Your data suggest a strong automatic preference for Thin people over Fat people.'] = -3;
 
-	$resultText = is_numeric($resultTextArr[$resultText]) ? $resultTextArr[$resultText] : 999;
+	$resultScore = is_numeric($resultTextArr[$resultText]) ? $resultTextArr[$resultText] : 999;
 
 	$tableName = 'pi-devel';
 	$item = $marshaler->marshalJson('
     	{
         	"clientIP": "' . $clientIP . '",
-        	"entryid": ' . time() . ',
+        	"entryid": ' . $entryid . ',
         	"groupid": ' . $groupID . ',
-        	"demographics": ' . json_encode($demoArr) . ',
+			"groupText": "' . $groupText . '",
+			"demographics": ' . json_encode($demoArr) . ',
         	"explicits": ' . json_encode($explicitArr) . ',
-        	"resultScore": "' . $resultScore . '"
+			"resultScore": ' . $resultScore . ',
+			"traits": "' . $traits . '",
         	"resultText": "' . $resultText . '"
+
     	}
 	');
 	$params = [
@@ -133,9 +160,6 @@
 	    	$result = $dynamodb->putItem($params);
 	} catch (DynamoDbException $e) {
     		echo "Unable to add item:\n";
-    		echo $e->getMessage() . "\n";
+			echo $e->getMessage() . "\n";
 	}
-
-// this is where we will save anything off to the database that we decide we want to
-
 ?>
