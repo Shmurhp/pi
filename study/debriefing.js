@@ -23,39 +23,6 @@ define(['questAPI'], function(Quest){
         noSubmit:false
     });
 
-    var onFB = {
-        type:'grid',
-        name: 'iatevaluations',
-        description: '<p>2. What do you think of the IAT?</p>',
-        columns: ['Not at all', 'Slightly', 'Moderately', 'Very', 'Extremely'],
-        rows:[
-            'To what extent did you enjoy trying the IAT?',
-            'To what extent did the IAT score you received change your view of yourself?',
-            'To what extent are you skeptical of the IAT score that you received?'
-        ],
-        rowStemCss: {width:'280px'}
-    };
-
-    var onFBtouch = {
-        mixer : 'wrapper',
-        data : [
-            {
-                inherit : 'iatEval', 				
-                name: 'iatevaluations1',
-                description: '<p>2. What do you think of the IAT?<br/><br/>To what extent did you enjoy trying the IAT?</p>'
-            },
-            {
-                inherit : 'iatEval', 				
-                name: 'iatevaluations2',
-                description: '<p>To what extent did the IAT score you received change your view of yourself?</p>'
-            },
-            {
-                inherit : 'iatEval', 				
-                name: 'iatevaluations3',
-                description: '<p>To what extent are you skeptical of the IAT score that you received?</p>'
-            }
-        ]
-    };
 
     API.addSequence([
         {
@@ -75,28 +42,7 @@ define(['questAPI'], function(Quest){
 		    '<p>Your automatic preference may be described as "slight", "moderate", "strong", or "no preference". This indicates the <i>strength</i> of yourautomatic preference.</p>' +
 		'<p>The IAT requires a certain number of correct responses in order to get results. If you made too many errors while completing the test you will get the feedback that there were too many errors to determine a result.</p>' +
 	    '<p><b>Note that your IAT result is based only on the categorization task and not on the questions that you answered.</b></p>'+
-		'<hr>' +
-		    '<h4>Please answer the following questions about your results:</h4>'].join('\n')
-                },
-                {
-                    type:'dropdown',
-                    name: 'broughtwebsite',
-                    description:'<p>1. What brought you to this website?</p>',
-                    answers: [
-                        'Assignment for school',
-                        'Assignment for work',
-                        'Mention in a news story (any medium)',
-                        'Mention or link at a non-news Internet site',
-                        'My Internet search for this topic or a related topic',
-                        'Recommendation of a friend or co-worker',
-                        'Other'
-                    ]
-                },
-                isTouch ? onFB : onFBtouch,
-                {
-                    type:'text',
-                    name: 'trait',
-                    description:'<p>3. What traits do you believe a mentee should possess?</p>'
+		'<hr>'].join('\n')
                 },
                 {
                     type:'info',
