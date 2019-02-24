@@ -13,7 +13,7 @@ define(['questAPI'], function(Quest){
 		decline: true,
 		declineText: isTouch ? 'Decline' : 'Decline to Answer', 
 		autoFocus:true, 
-		progressBar: isTouch ? 'Page <%= pagesMeta.number %> out of 3' : 'Page <%= pagesMeta.number %> out of 15'
+		progressBar: isTouch ? 'Page <%= pagesMeta.number %> out of 3' : 'Page <%= pagesMeta.number %> out of 7'
 	});
 	
     /**
@@ -251,20 +251,6 @@ define(['questAPI'], function(Quest){
 				mixer : 'random', 
 				data : [
 					{
-						mixer : 'random', 
-						wrapper:true, 
-						data : [
-							{
-								inherit:'basicPage', 
-								questions: {inherit:'thermFat'}
-							},
-							{
-								inherit:'basicPage', 
-								questions: {inherit:'thermThin'}							
-							}
-						]
-					},
-					{
 						inherit:'basicPage', 
 						questions: {inherit:'att7'}
 					}
@@ -279,20 +265,6 @@ define(['questAPI'], function(Quest){
 			{
 				mixer : 'random', 
 				data : [
-					{
-						mixer : 'random', 
-						wrapper:true, 
-						data : [
-							{
-								inherit:'basicPage', 
-								questions: {inherit:'thermFat'}
-							},
-							{
-								inherit:'basicPage', 
-								questions: {inherit:'thermThin'}							
-							}
-						]
-					},
 					{
 						inherit:'basicPage', 
 						questions: {inherit:'att7'}
@@ -309,31 +281,11 @@ define(['questAPI'], function(Quest){
 						data : [
 							{
 								inherit:'basicPage', 
-								questions: {inherit:'identfat'}
-							},
-							{
-								inherit:'basicPage', 
-								questions: {inherit:'identthin'}
-							},
-							{
-								inherit:'basicPage', 
 								questions: {inherit:'comptomost'}
 							},
 							{
 								inherit:'basicPage', 
-								questions: {inherit:'controlother'}
-							},
-							{
-								inherit:'basicPage', 
-								questions: {inherit:'important'}
-							},
-							{
-								inherit:'basicPage', 
 								questions: {inherit:'mostpref'}
-							},
-							{
-								inherit:'basicPage', 
-								questions: {inherit:'easytolose'}
 							},
 							{
 								inherit:'basicPage', 
@@ -342,10 +294,6 @@ define(['questAPI'], function(Quest){
 							{
 								inherit:'basicPage', 
 								questions: {inherit:'iam'}
-							},
-							{
-								inherit:'basicPage', 
-								questions: {inherit:'controlyou'}							
 							}
 						]
 					},
