@@ -65,7 +65,7 @@ define(['managerAPI'], function(Manager) {
         explicits: [{
             type: 'quest',
             name: 'explicits',
-            scriptUrl: 'explicits_test.js'
+            scriptUrl: 'explicits.js'
         }],
 
         weightiat: [{
