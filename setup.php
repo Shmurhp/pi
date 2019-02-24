@@ -5,8 +5,8 @@ date_default_timezone_set('America/New_York');
 use Aws\DynamoDb\Exception\DynamoDbException;
 use Aws\DynamoDb\Marshaler;
 $sdk = new Aws\Sdk([
-   		'region'   => 'us-east-1',
-   		'version'  => 'latest'
+    	'region' => $_SERVER["region"],
+   	'version'  => 'latest'
 ]);
 $dynamodb = $sdk->createDynamoDb();
 $marshaler = new Marshaler();
