@@ -1064,10 +1064,6 @@ define(['questAPI','underscore'], function(Quest,_){
             questions: [ 
                 {inherit:'raceombmulti', autoSubmit:true}
             ]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [{inherit: 'politicalid'}]
         }
     ]);
 
@@ -1104,39 +1100,12 @@ define(['questAPI','underscore'], function(Quest,_){
         },
         {
             inherit: 'basicPage',
-            questions: [{inherit: 'num'}]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [{inherit: 'politicalid'}]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [{inherit: 'religion2014'}]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [{inherit: 'religionid'}]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [{inherit: 'countrycit'}]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [{inherit: 'countryres'}]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [//If required would be set to true, then participants cannot select one and leave the other empty.
-                {inherit: 'postcodenow', required:false},
-                {inherit: 'postcodelong', required:false}]
-        },
-        {
-            inherit: 'basicPage',
             questions: [{inherit: 'edu'}]
         },
-
+        {
+            inherit: 'basicPage',
+            questions: [{inherit: 'incomeSelf'}]
+        },
         /**
          * Select occupation
          */
