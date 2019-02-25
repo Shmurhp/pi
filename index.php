@@ -1,7 +1,7 @@
 <?php
 require 'setup.php';
 
-$result = $client->describeTable(array(
+$result = $dynamodb->describeTable(array(
     'TableName' => $_SERVER["ddbtablea"]
 ));
 
