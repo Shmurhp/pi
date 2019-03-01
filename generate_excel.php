@@ -38,8 +38,8 @@ $sheet->setCellValueByColumnAndRow($col++,$row,'Compared to Most People');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Height');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Weight');
 
-#$tableName = $_SERVER["ddbtablea"];
-$tableName = 'pi-devel';
+$tableName = $_SERVER["ddbtablea"];
+#$tableName = 'pi-devel';
 
 $params = [
     'TableName' => $tableName
@@ -106,6 +106,6 @@ $sheet->setCellValueByColumnAndRow($col++,$row,'Weight');
 $writer = new Xlsx($spreadsheet);
 $writer->save('excel_results/results.xlsx');
 
-
+shell_exec('php s3copy.php')
 
 ?>

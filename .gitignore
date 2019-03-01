@@ -10,6 +10,7 @@
 *.vi
 *~
 *.sass-cache
+*.xlsx
 
 # OS or Editor folders
 .tmp
@@ -30,4 +31,3 @@ templates_c
 vendor
 composer.phar
 composer.lock
-excel_results/*
