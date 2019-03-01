@@ -13,9 +13,8 @@ putenv("s3bucket=".getenv("s3bucket"));
 use Aws\DynamoDb\Exception\DynamoDbException;
 use Aws\DynamoDb\Marshaler;
 $sdk = new Aws\Sdk([
-#    'region' => $_SERVER["region"],
-'region' => 'us-east-1',
-  'version'  => 'latest'
+  'region' => $_SERVER["region"],
+  'version' => 'latest'
 ]);
 $dynamodb = $sdk->createDynamoDb();
 $marshaler = new Marshaler();
