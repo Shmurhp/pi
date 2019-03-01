@@ -129,10 +129,6 @@ define(['managerAPI'], function(Manager) {
         },
 
         {inherit: 'debriefing'},
-        {
-            type:'postCsv',
-            url:'csv.php'
-        },
         {inherit: 'lastpage'}
     ]);
 

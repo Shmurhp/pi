@@ -127,13 +127,13 @@
 		}
 	}
 	$resultTextArr = array();
-	$resultTextArr['Your data suggest a strong automatic preference for Fat people over Thin people.'] = 3;
-	$resultTextArr['Your data suggest a moderate automatic preference for Fat people over Thin people.'] = 2;
-	$resultTextArr['Your data suggest a slight automatic preference for Fat people over Thin people.'] = 1;
+	$resultTextArr['Your data suggest a strong automatic preference for Fat people over Thin people.'] = -3;
+	$resultTextArr['Your data suggest a moderate automatic preference for Fat people over Thin people.'] = -2;
+	$resultTextArr['Your data suggest a slight automatic preference for Fat people over Thin people.'] = -1;
 	$resultTextArr['Your data suggest no automatic preference between categoryA and categoryB.'] = 0;
-	$resultTextArr['Your data suggest a slight automatic preference for Thin people over Fat people.'] = -1;
-	$resultTextArr['Your data suggest a moderate automatic preference for Thin people over Fat people.'] = -2;
-	$resultTextArr['Your data suggest a strong automatic preference for Thin people over Fat people.'] = -3;
+	$resultTextArr['Your data suggest a slight automatic preference for Thin people over Fat people.'] = 1;
+	$resultTextArr['Your data suggest a moderate automatic preference for Thin people over Fat people.'] = 2;
+	$resultTextArr['Your data suggest a strong automatic preference for Thin people over Fat people.'] = 3;
 
 	$resultScore = is_numeric($resultTextArr[$resultText]) ? $resultTextArr[$resultText] : 999;
 
