@@ -38,6 +38,15 @@ define(['managerAPI'], function(Manager) {
             buttonText: 'Continue'
         }],
 
+        intropage: [{
+            inherit: 'instructions',
+            name: 'intropage',
+            templateUrl: 'intropage.jst',
+            title: 'Consent Page',
+            piTemplate: true,
+            header: 'Welcome'
+        }],
+
         realstart: [{
             inherit: 'instructions',
             name: 'realstart',
@@ -108,6 +117,7 @@ define(['managerAPI'], function(Manager) {
     });
 
     API.addSequence([
+        {inherit: 'intropage'},
         {inherit: 'realstart'},
         {inherit: 'group_id'},
         {inherit: 'traits'},
