@@ -13,7 +13,6 @@
 	$requiredDemo = array('raceomb002', 'birthMonth', 'incomeSelf', 'edu', 'genderIdentity', 'edu', 'ethnicityomb', 'occuSelf');
 	$requiredExplicit = array('att7', 'othersay001', 'iam001', 'mostpref001', 'comptomost001', 'myheight002', 'myweight002');
 	$tableName = $_SERVER["ddbtableb"];
-	print "querying group table with $groupID";
 	$key = $marshaler->marshalJson('
    		{
       		"name": "group"
@@ -30,8 +29,6 @@
 		echo "Unable to get item:\n";
 		echo $e->getMessage() . "\n";
 	}
-	print $groupText;
-
 
 	$demoArr = array();
 	foreach ($requiredDemo as $lookup) {
