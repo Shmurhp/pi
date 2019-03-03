@@ -19,15 +19,6 @@ $sdk = new Aws\Sdk([
 $dynamodb = $sdk->createDynamoDb();
 $marshaler = new Marshaler();
 
-// put full path to Smarty.class.php
-require('vendor/smarty/smarty/libs/Smarty.class.php');
-$smarty = new Smarty();
-
-$smarty->setTemplateDir('templates');
-$smarty->setCompileDir('templates_c');
-$smarty->setCacheDir('cache');
-$smarty->setConfigDir('configs');
-
 function getRealIpAddr()
 {
     if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
