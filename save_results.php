@@ -58,7 +58,7 @@
 				// so save that off to query later
 				$occuSelfVal = $result["Item"]["lookup"]["M"][$demoQuestions[$lookup]['response']]["S"]; 
 			} else {
-				$demoArr[$lookup][$demoQuestions[$lookup]['response']] = "'" . $lookupResult. "'";
+				$demoArr[$lookup][$demoQuestions[$lookup]['response']] = $lookupResult;
 			}
 		}
 	}
@@ -100,7 +100,7 @@
 							$explicitArr[$lookup][$explicits[$lookup]['response']] = '> 400';
 						} else {
 							$response = $explicits[$lookup]['response'];
-							$explicitArr[$lookup][$explicits[$lookup]['response']] = "'" . (($explicits[$lookup]['response'] * 5) + 40) . "'";
+							$explicitArr[$lookup][$explicits[$lookup]['response']] = (($explicits[$lookup]['response'] * 5) + 40);
 						}
 						break;
 					case 'myheight002': 
@@ -110,7 +110,7 @@
 						} elseif ($explicits[$lookup]['response'] == 51) {
 							$explicitArr[$lookup][$explicits[$lookup]['response']] = '> 84';
 						} else {
-							$explicitArr[$lookup][$explicits[$lookup]['response']] = "'" . ($explicits[$lookup]['response'] + 34) . "'";
+							$explicitArr[$lookup][$explicits[$lookup]['response']] = ($explicits[$lookup]['response'] + 34);
 						}
 						break;
 					default:
@@ -123,7 +123,7 @@
 							for ($i = 1; $i < $explicits[$lookup]['response']; $i++){
 								$explicitVal -= 1;
 							}
-							$explicitArr[$lookup][$explicits[$lookup]['response']] = "'" . $explicitVal . "'";
+							$explicitArr[$lookup][$explicits[$lookup]['response']] = $explicitVal;
 						}	
 						break;
 			}
