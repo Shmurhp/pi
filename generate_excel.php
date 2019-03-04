@@ -16,7 +16,6 @@ $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
 // Header Row
-
 $row = 1;
 $col = 1;
 $sheet->setCellValueByColumnAndRow($col++,$row,'Timestamp');
@@ -26,36 +25,36 @@ $sheet->setCellValueByColumnAndRow($col++,$row,'Client IP');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Mentee Traits');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Result Text');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Result Score');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Birth Month #');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Birth Month');
-$sheet->setCellValueByColumnAndRow($col++,$row,'');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Birth Year #');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Birth Year');
-$sheet->setCellValueByColumnAndRow($col++,$row,'');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Income Level #');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Income Level');
-$sheet->setCellValueByColumnAndRow($col++,$row,'');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Education Level #');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Education Level');
-$sheet->setCellValueByColumnAndRow($col++,$row,'');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Race #');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Race');
-$sheet->setCellValueByColumnAndRow($col++,$row,'');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Ethnicity #');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Ethnicity');
-$sheet->setCellValueByColumnAndRow($col++,$row,'');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Weight Preference #');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Weight Preference');
-$sheet->setCellValueByColumnAndRow($col++,$row,'');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Other People Say #');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Other People Say');
-$sheet->setCellValueByColumnAndRow($col++,$row,'');
-$sheet->setCellValueByColumnAndRow($col++,$row,'Currently I am');
-$sheet->setCellValueByColumnAndRow($col++,$row,'');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Currently I Am #');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Currently I Am');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Most People #');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Most People');
-$sheet->setCellValueByColumnAndRow($col++,$row,'');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Compared to Most People #');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Compared to Most People');
-$sheet->setCellValueByColumnAndRow($col++,$row,'');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Height #');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Height');
-$sheet->setCellValueByColumnAndRow($col++,$row,'');
+$sheet->setCellValueByColumnAndRow($col++,$row,'Weight #');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Weight');
-$sheet->setCellValueByColumnAndRow($col++,$row,'');
 $sheet->setCellValueByColumnAndRow($col++,$row,'BMI');
 
 $tableName = $_SERVER["ddbtablea"];
-#$tableName = 'pi-devel';
+// $tableName = 'pi-devel';
 
 $params = [
     'TableName' => $tableName
@@ -70,8 +69,6 @@ try {
 
 $row = 2;
 
-//print_r($result['Items'][0]);
-
 foreach ($result['Items'] as $r) {
     $col = 1;    
     
@@ -83,23 +80,7 @@ foreach ($result['Items'] as $r) {
     $sheet->setCellValueByColumnAndRow($col++, $row, ($r['resultText'] ? $marshaler->unmarshalValue($r['resultText']) : ''));
     $sheet->setCellValueByColumnAndRow($col++, $row, ($r['resultScore'] ? $marshaler->unmarshalValue($r['resultScore']) : ''));
 
-    //print $marshaler->unmarshalValue($r['demographics']['birthYear']);
-
-
     $demo = $marshaler->unmarshalValue($r['demographics']);
-
-    //print $demo['birthYear'];
-    //  print_r($demo);
-    /*
-    $sheet->setCellValueByColumnAndRow($col++,$row,'Education Level');
-$sheet->setCellValueByColumnAndRow($col++,$row,'User Preference');
-$sheet->setCellValueByColumnAndRow($col++,$row,'Other People');
-$sheet->setCellValueByColumnAndRow($col++,$row,'Currently I am');
-$sheet->setCellValueByColumnAndRow($col++,$row,'Most People');
-$sheet->setCellValueByColumnAndRow($col++,$row,'Compared to Most People');
-$sheet->setCellValueByColumnAndRow($col++,$row,'Height');
-$sheet->setCellValueByColumnAndRow($col++,$row,'Weight');
-*/
     foreach ($demo['birthMonth'] as $key => $value) {
     	$sheet->setCellValueByColumnAndRow($col++, $row, $key);
     	$sheet->setCellValueByColumnAndRow($col++, $row, $value);
@@ -150,26 +131,21 @@ $sheet->setCellValueByColumnAndRow($col++,$row,'Weight');
     foreach ($exp['myheight002'] as $key => $value) {
         $sheet->setCellValueByColumnAndRow($col++, $row, $key);
         $sheet->setCellValueByColumnAndRow($col++, $row, $value);
-	$height = $value;
+	$height = str_replace("'", "", $value);
     }
     foreach ($exp['myweight002'] as $key => $value) {
         $sheet->setCellValueByColumnAndRow($col++, $row, $key);
         $sheet->setCellValueByColumnAndRow($col++, $row, $value);
-	$weight = $value;
+	$weight = str_replace("'", "", $value);
     }
-    $bmi = ($height AND $weight) ? (($weight*0.45)/(pow($height*0.025,2))) : '';
+    $bmi = (is_numeric($height) && is_numeric($weight)) ? (($weight*0.45)/(pow($height*0.025,2))) : 'Could Not Calculate';
     $sheet->setCellValueByColumnAndRow($col++, $row, $bmi);
 
-
-//    $sheet->setCellValueByColumnAndRow($col++,$row,($r['clientIP'] ? $marshaler->unmarshalValue($r['clientIP']) : ''));
-  //  $sheet->setCellValueByColumnAndRow($col++,$row,($r['age'] ? $marshaler->unmarshalValue($r['age']) : ''));
     $row++;
 }
-
 
 $writer = new Xlsx($spreadsheet);
 $writer->save('excel_results/results.xlsx');
 
 shell_exec('php s3copy.php')
-
 ?>
