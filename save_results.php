@@ -96,8 +96,8 @@
 						// math to convert $explicits[$lookup]['response'] to lbs
 						if ($explicits[$lookup]['response'] == 1){
 							$explicitArr[$lookup][$explicits[$lookup]['response']] = '< 50';
-						} elseif ($explicits[$lookup]['response'] == 51) {
-							$explicitArr[$lookup][$explicits[$lookup]['response']] = '> 400';
+						} elseif ($explicits[$lookup]['response'] == 81) {
+							$explicitArr[$lookup][$explicits[$lookup]['response']] = '> 440';
 						} else {
 							$response = $explicits[$lookup]['response'];
 							$explicitArr[$lookup][$explicits[$lookup]['response']] = (($explicits[$lookup]['response'] * 5) + 40);
