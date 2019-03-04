@@ -27,18 +27,32 @@ $sheet->setCellValueByColumnAndRow($col++,$row,'Mentee Traits');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Result Text');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Result Score');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Birth Month');
+$sheet->setCellValueByColumnAndRow($col++,$row,'');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Birth Year');
+$sheet->setCellValueByColumnAndRow($col++,$row,'');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Income Level');
+$sheet->setCellValueByColumnAndRow($col++,$row,'');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Education Level');
+$sheet->setCellValueByColumnAndRow($col++,$row,'');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Race');
+$sheet->setCellValueByColumnAndRow($col++,$row,'');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Ethnicity');
+$sheet->setCellValueByColumnAndRow($col++,$row,'');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Weight Preference');
+$sheet->setCellValueByColumnAndRow($col++,$row,'');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Other People Say');
+$sheet->setCellValueByColumnAndRow($col++,$row,'');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Currently I am');
+$sheet->setCellValueByColumnAndRow($col++,$row,'');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Most People');
+$sheet->setCellValueByColumnAndRow($col++,$row,'');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Compared to Most People');
+$sheet->setCellValueByColumnAndRow($col++,$row,'');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Height');
+$sheet->setCellValueByColumnAndRow($col++,$row,'');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Weight');
+$sheet->setCellValueByColumnAndRow($col++,$row,'');
+$sheet->setCellValueByColumnAndRow($col++,$row,'BMI');
 
 $tableName = $_SERVER["ddbtablea"];
 #$tableName = 'pi-devel';
@@ -73,6 +87,7 @@ foreach ($result['Items'] as $r) {
 
 
     $demo = $marshaler->unmarshalValue($r['demographics']);
+
     //print $demo['birthYear'];
     //  print_r($demo);
     /*
@@ -85,20 +100,65 @@ $sheet->setCellValueByColumnAndRow($col++,$row,'Compared to Most People');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Height');
 $sheet->setCellValueByColumnAndRow($col++,$row,'Weight');
 */
-    $sheet->setCellValueByColumnAndRow($col++, $row, $demo['birthMonth']);
-    $sheet->setCellValueByColumnAndRow($col++, $row, $demo['birthYear']);
-    $sheet->setCellValueByColumnAndRow($col++, $row, $demo['incomeSelf']);
-    $sheet->setCellValueByColumnAndRow($col++, $row, $demo['edu']);
-    $sheet->setCellValueByColumnAndRow($col++, $row, $demo['raceomb002']);
-    $sheet->setCellValueByColumnAndRow($col++, $row, $demo['ethnicityomb']);
+    foreach ($demo['birthMonth'] as $key => $value) {
+    	$sheet->setCellValueByColumnAndRow($col++, $row, $key);
+    	$sheet->setCellValueByColumnAndRow($col++, $row, $value);
+    }
+    foreach ($demo['birthYear'] as $key => $value) {
+        $sheet->setCellValueByColumnAndRow($col++, $row, $key);
+        $sheet->setCellValueByColumnAndRow($col++, $row, $value);
+    }
+    foreach ($demo['incomeSelf'] as $key => $value) {    
+        $sheet->setCellValueByColumnAndRow($col++, $row, $key);
+        $sheet->setCellValueByColumnAndRow($col++, $row, $value);
+    }
+    foreach ($demo['edu'] as $key => $value) {
+        $sheet->setCellValueByColumnAndRow($col++, $row, $key);
+        $sheet->setCellValueByColumnAndRow($col++, $row, $value);
+    }
+    foreach ($demo['raceomb002'] as $key => $value) {
+        $sheet->setCellValueByColumnAndRow($col++, $row, $key);
+        $sheet->setCellValueByColumnAndRow($col++, $row, $value);
+    }
+    foreach ($demo['ethnicityomb'] as $key => $value) {
+        $sheet->setCellValueByColumnAndRow($col++, $row, $key);
+        $sheet->setCellValueByColumnAndRow($col++, $row, $value);
+    }
+    
     $exp = $marshaler->unmarshalValue($r['explicits']);
-    $sheet->setCellValueByColumnAndRow($col++, $row, $exp['att7']);
-    $sheet->setCellValueByColumnAndRow($col++, $row, $exp['othersay001']);
-    $sheet->setCellValueByColumnAndRow($col++, $row, $exp['iam001']);
-    $sheet->setCellValueByColumnAndRow($col++, $row, $exp['mostpref001']);
-    $sheet->setCellValueByColumnAndRow($col++, $row, $exp['comptomost001']);
-    $sheet->setCellValueByColumnAndRow($col++, $row, $exp['myheight002']);
-    $sheet->setCellValueByColumnAndRow($col++, $row, $exp['myweight002']);
+
+    foreach ($exp['att7'] as $key => $value) {
+        $sheet->setCellValueByColumnAndRow($col++, $row, $key);
+        $sheet->setCellValueByColumnAndRow($col++, $row, $value);
+    }
+    foreach ($exp['othersay001'] as $key => $value) {
+        $sheet->setCellValueByColumnAndRow($col++, $row, $key);
+        $sheet->setCellValueByColumnAndRow($col++, $row, $value);
+    }
+    foreach ($exp['iam001'] as $key => $value) {
+        $sheet->setCellValueByColumnAndRow($col++, $row, $key);
+        $sheet->setCellValueByColumnAndRow($col++, $row, $value);
+    }
+    foreach ($exp['mostpref001'] as $key => $value) {
+        $sheet->setCellValueByColumnAndRow($col++, $row, $key);
+        $sheet->setCellValueByColumnAndRow($col++, $row, $value);
+    }
+    foreach ($exp['comptomost001'] as $key => $value) {
+        $sheet->setCellValueByColumnAndRow($col++, $row, $key);
+        $sheet->setCellValueByColumnAndRow($col++, $row, $value);
+    }
+    foreach ($exp['myheight002'] as $key => $value) {
+        $sheet->setCellValueByColumnAndRow($col++, $row, $key);
+        $sheet->setCellValueByColumnAndRow($col++, $row, $value);
+	$height = $value;
+    }
+    foreach ($exp['myweight002'] as $key => $value) {
+        $sheet->setCellValueByColumnAndRow($col++, $row, $key);
+        $sheet->setCellValueByColumnAndRow($col++, $row, $value);
+	$weight = $value;
+    }
+    $bmi = ($height AND $weight) ? (($weight*0.45)/(pow($height*0.025,2))) : '';
+    $sheet->setCellValueByColumnAndRow($col++, $row, $bmi);
 
 
 //    $sheet->setCellValueByColumnAndRow($col++,$row,($r['clientIP'] ? $marshaler->unmarshalValue($r['clientIP']) : ''));
