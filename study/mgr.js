@@ -38,6 +38,15 @@ define(['managerAPI'], function(Manager) {
             buttonText: 'Continue'
         }],
 
+        intropage: [{
+            inherit: 'instructions',
+            name: 'intropage',
+            templateUrl: 'intropage.jst',
+            title: 'Consent Page',
+            piTemplate: true,
+            header: 'Welcome'
+        }],
+
         realstart: [{
             inherit: 'instructions',
             name: 'realstart',
@@ -45,6 +54,18 @@ define(['managerAPI'], function(Manager) {
             title: 'Consent',
             piTemplate: true,
             header: 'Welcome'
+        }],
+
+        group_id: [{
+            type: 'quest',
+            name: 'group_id',
+            scriptUrl: 'group_id.js'
+        }],
+
+        traits: [{
+            type: 'quest',
+            name: 'traits',
+            scriptUrl: 'traits.js'
         }],
 
         instiat_weight: [{
@@ -96,7 +117,10 @@ define(['managerAPI'], function(Manager) {
     });
 
     API.addSequence([
+        {inherit: 'intropage'},
         {inherit: 'realstart'},
+        {inherit: 'group_id'},
+        {inherit: 'traits'},
         {
             mixer:'random',
             data:[
@@ -115,10 +139,6 @@ define(['managerAPI'], function(Manager) {
         },
 
         {inherit: 'debriefing'},
-        {
-            type:'postCsv',
-            url:'csv.php'
-        },
         {inherit: 'lastpage'}
     ]);
 

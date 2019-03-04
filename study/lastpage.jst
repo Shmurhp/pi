@@ -1,29 +1,29 @@
 <div class="panel panel-info" style="margin-top:1em">
 
 	<div class="panel-body">
-        <p>Thank you for participating!</p> 
+        <p>The test is now complete.  Thank you for participating!</p> 
         <p>
-            The sorting test you just took is called the Implicit Association Test (IAT). 
-            You categorized good and bad words with images of Fat People and Thin People.
         </p>
 
         <div class="jumbotron jumbotron-dark">
             <h2>Here are your results:</h2>
             <p><%= global.weightiat.feedback %></p>
         </div>
-	<div>
-		<input type="hidden" id="feedback" value="<%= global.weightiat.feedback %>" />
-		<input type="hidden" id="global_var" value="<%= global %>" />
-	</div>
 	<script>
-		feedback = $('#feedback').val();
-		global_var = $('#global_var').val();
 		$.ajax({
   			  method: "POST",
 			  url: "save_results.php",
-			  data: { feedback: feedback, global: global_var }
+			  data: { 
+				resultText: piGlobal.weightiat.feedback, 
+				demoQuestions: piGlobal.demographics.questions, 
+				explicits: piGlobal.explicits.questions, 
+				groupID: piGlobal.group_id.questions.groupID.response,
+                traits: piGlobal.traits.questions.traits.response
+				}
 		})
 	</script>
+
+        <h4><mark>Your results have been submitted.  You may now close your browser or read below for more information.</mark></h4>
 
         <h3>Interpreting your results</h3>
         <p>
@@ -74,13 +74,10 @@
             and the other half get the opposite order.
         </p>
 
-        <h3>I Still Have Questions About The Study.</h3>
-        If you have questions about the IAT, please check out our Frequently Asked Questions (FAQ). 
-        If you have any questions or comments about the study, please email the lead investigator NAME (<a href="mailto:EMAIL@EMAIL.EDU">EMAIL@EMAIL.EDU</a>).
-
         <h3>Your Participation is Important!</h3>
         Thank you again for participating in this research!
         We have learned so much from people like you taking the time to be part of our work. 
+
 	</div>
 </div>
 

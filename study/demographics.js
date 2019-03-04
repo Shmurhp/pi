@@ -19,7 +19,7 @@ define(['questAPI','underscore'], function(Quest,_){
         autoFocus:true, 
         header: 'Demographics',
         numbered: false,
-        progressBar: isTouch ? 'Page <%= pagesMeta.number %> out of 6' : 'Page <%= pagesMeta.number %> out of 13'
+        progressBar: isTouch ? 'Page <%= pagesMeta.number %> out of 6' : 'Page <%= pagesMeta.number %> out of 7'
     });
 
     /**
@@ -85,7 +85,7 @@ define(['questAPI','underscore'], function(Quest,_){
     });
 
     API.addQuestionsSet('genderIdentity',{
-        inherit: 'multiChoice',
+        inherit: 'singleChoice',
         name: 'genderIdentity',
         stem: 'What is your current gender identity? (check all that apply)',
         answers: [
@@ -101,7 +101,7 @@ define(['questAPI','underscore'], function(Quest,_){
     API.addQuestionsSet('birthMonth',{
         inherit: 'singleChoice',
         style:'multiButtons',
-        name: 'birthmonth',
+        name: 'birthMonth',
         stem: 'What is your birth month?',
         answers: [
             {text:'January',value:1},
@@ -121,7 +121,7 @@ define(['questAPI','underscore'], function(Quest,_){
 
     API.addQuestionsSet('birthYear',{
         inherit: 'singleChoicedrop',
-        name: 'birthyear',
+        name: 'birthYear',
         stem: 'What is your birth year?',
         answers: _.range((new Date()).getFullYear()-10, 1910, -1) // use underscore to create an array of years from ten years ago back to 1910
     });
@@ -1064,10 +1064,6 @@ define(['questAPI','underscore'], function(Quest,_){
             questions: [ 
                 {inherit:'raceombmulti', autoSubmit:true}
             ]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [{inherit: 'politicalid'}]
         }
     ]);
 
@@ -1104,39 +1100,12 @@ define(['questAPI','underscore'], function(Quest,_){
         },
         {
             inherit: 'basicPage',
-            questions: [{inherit: 'num'}]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [{inherit: 'politicalid'}]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [{inherit: 'religion2014'}]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [{inherit: 'religionid'}]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [{inherit: 'countrycit'}]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [{inherit: 'countryres'}]
-        },
-        {
-            inherit: 'basicPage',
-            questions: [//If required would be set to true, then participants cannot select one and leave the other empty.
-                {inherit: 'postcodenow', required:false},
-                {inherit: 'postcodelong', required:false}]
-        },
-        {
-            inherit: 'basicPage',
             questions: [{inherit: 'edu'}]
         },
-
+        {
+            inherit: 'basicPage',
+            questions: [{inherit: 'incomeSelf'}]
+        },
         /**
          * Select occupation
          */
