@@ -1,4 +1,4 @@
-define(['pipAPI','https://cdn.jsdelivr.net/gh/baranan/minno-tasks@0.1/IAT/iat6.js'], function(APIConstructor, iatExtension){
+define(['pipAPI','/minno-tasks/IAT/iat6.js'], function(APIConstructor, iatExtension){
 	var API = new APIConstructor();
     var global = API.getGlobal();
     
@@ -10,17 +10,13 @@ define(['pipAPI','https://cdn.jsdelivr.net/gh/baranan/minno-tasks@0.1/IAT/iat6.j
                 css : {color:'#31940F','font-size':'1.8em'}, //Style of the category title.
                 height : 4 //Used to position the "Or" in the combined block.
             }, 
-            stimulusMedia : [ //Stimuli content as PIP's media objects
-                {image: 'fatman1.jpg'},
-                {image: 'fatman3.jpg'},
-                {image: 'fatman4.jpg'},
-				{image: 'fatman5.jpg'},
-                {image: 'fatman6.jpg'},                 
-				{image: 'fatwoman1.jpg'},
-                {image: 'fatwoman2.jpg'},
-                {image: 'fatwoman3.jpg'},
-                {image: 'fatwoman4.jpg'},
-                {image: 'fatwoman6.jpg'}     
+            stimulusMedia : [ //Stimuli content as PIP's media objects               
+				{image: 'fatwoman1.png'},
+                {image: 'fatwoman2.png'},
+                {image: 'fatwoman3.png'},
+				{image: 'fatwoman4.png'},
+				{image: 'fatwoman5.png'},
+                {image: 'fatwoman6.png'}     
     	    ],
     		//Stimulus css (style)
     		stimulusCss : {color:'#31940F','font-size':'2.3em'}
@@ -32,17 +28,13 @@ define(['pipAPI','https://cdn.jsdelivr.net/gh/baranan/minno-tasks@0.1/IAT/iat6.j
                 css : {color:'#31940F','font-size':'1.8em'}, //Style of the category title.
                 height : 4 //Used to position the "Or" in the combined block.
             }, 
-            stimulusMedia : [ //Stimuli content as PIP's media objects
-                {image: 'thinman1.jpg'},
-                {image: 'thinman2.jpg'},
-                {image: 'thinman3.jpg'},
-				{image: 'thinman5.jpg'},
-                {image: 'thinman6.jpg'},                 
-				{image: 'thinwoman1.jpg'},
-                {image: 'thinwoman2.jpg'},
-                {image: 'thinwoman3.jpg'},
-				{image: 'thinwoman5.jpg'},
-                {image: 'thinwoman6.jpg'}  
+            stimulusMedia : [ //Stimuli content as PIP's media objects               
+				{image: 'thinwoman1.png'},
+                {image: 'thinwoman2.png'},
+				{image: 'thinwoman3.png'},
+				{image: 'thinwoman4.png'},
+				{image: 'thinwoman5.png'},
+                {image: 'thinwoman6.png'}  
             ],
     		//Stimulus css (style)
     		stimulusCss : {color:'#31940F','font-size':'2.3em'}
