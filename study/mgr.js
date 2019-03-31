@@ -86,7 +86,7 @@ define(['managerAPI'], function(Manager) {
         weightiat: [{
             type: 'pip',
             version:0.3,
-            baseUrl: '//cdn.jsdelivr.net/gh/minnojs/minno-time@0.3/dist/js',
+            baseUrl: '//cdn.jsdelivr.net/gh/minnojs/minno-time@0.3.40/dist/js',
             name: 'weightiat',
             scriptUrl: 'weightiat.js'
         }],
